@@ -19,7 +19,7 @@ class AdminAuth
         if($request->Session()->has('ADMIN_LOGIN')){
 
         }else{
-            $request->session()->flash('error',"Invalid credentials dickhead");
+            $request->session()->flash('error',"Please login Admin");
             return redirect('admin');
         }
         return $next($request);

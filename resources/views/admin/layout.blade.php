@@ -10,7 +10,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Dashboard</title>
+    <title>@yield('page_title')</title>
 
     <!-- Fontfaces CSS-->
     <link href="{{asset('admin_assets/css/font-face.css')}}" rel="stylesheet" media="all">
@@ -61,7 +61,7 @@
                         
                         </li>
                         <li>
-                            <a href="chart.html">
+                            <a href="{{url('admin/category')}}">
                                 <i class="fas fa-chart-bar"></i>Category</a>
                         </li>
                     </ul>
@@ -80,13 +80,17 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="active has-sub">
+                        <li class="@yield('dashboard_select')">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
-                        <li>
-                            <a class="js-arrow" href="chart.html">
-                                <i class="fas fa-chart-bar"></i>Category</a>
+                        <li class="@yield('category_select')">
+                            <a class="js-arrow" href="{{url('admin/category')}}">
+                                <i class="fas fa-list"></i>Category</a>
+                        </li>
+                        <li class="@yield('coupon_select')">
+                            <a class="js-arrow" href="{{url('admin/coupon')}}">
+                                <i class="fas fa-tag"></i>Coupon</a>
                         </li>
                     </ul>
                 </nav>
@@ -123,7 +127,7 @@
                                                     <h5 class="name">
                                                         <a href="#">ADMIN</a>
                                                     </h5>
-                                                    <span class="email">johndoe@example.com</span>
+                                                    <span class="email"></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -138,7 +142,7 @@
                                              
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                                <a href="{{url('admin/logout')}}">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
                                         </div>
@@ -151,9 +155,17 @@
             </header>
             <!-- HEADER DESKTOP-->
             <!-- END PAGE CONTAINER-->
+          
+                            
+                            @section('content')
+                            @show
+                     
+                  
+            </div>
         </div>
 
     </div>
+    
 
     <!-- Jquery JS-->
     <script src="{{asset('admin_assets/vendor/jquery-3.2.1.min.js')}}"></script>
