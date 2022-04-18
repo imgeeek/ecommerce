@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\SizeController;
+use App\Http\Controllers\ColorController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\BrandController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,5 +46,36 @@ Route::group(['middleware'=>'admin_auth'], function(){
     Route::get('admin/coupon/delete/{id}',[CouponController::class,'delete']);
     Route::get('admin/coupon/manage_coupon/edit/{id}',[CouponController::class,'manage_coupon']);
     
-    
+    //Size from here
+    Route::get('admin/size',[SizeController::class,'index']);
+    Route::get('admin/size/manage_size',[SizeController::class,'manage_size']);
+    Route::post('admin/size/manage_size_processs',[SizeController::class,'manage_size_processs'])->name('size.manage_size_process');
+    Route::get('admin/size/delete/{id}',[SizeController::class,'delete']);
+    Route::get('admin/size/manage_size/edit/{id}',[SizeController::class,'manage_size']);
+    Route::get('admin/size/status/{type}/{id}',[SizeController::class,'status']);
+    //color from here
+    Route::get('admin/color',[ColorController::class,'index']);
+    Route::get('admin/color/manage_color',[ColorController::class,'manage_color']);
+    Route::post('admin/color/manage_color_process',[ColorController::class,'manage_color_process'])->name('color.manage_color_process');
+    Route::get('admin/color/delete/{id}',[ColorController::class,'delete']);
+    Route::get('admin/color/manage_size/edit/{id}',[ColorController::class,'manage_color']);
+    Route::get('admin/color/status/{type}/{id}',[ColorController::class,'status']);
+
+    // Product controller routing from here
+    Route::get('admin/product',[ProductController::class,'index']);
+    Route::get('admin/product/manage_product',[ProductController::class,'manage_product']);
+    Route::post('admin/product/manage_product_process',[ProductController::class,'manage_product_process'])->name('product.manage_product_process');
+    Route::get('admin/product/delete/{id}',[ProductController::class,'delete']);
+    Route::get('admin/product/manage_product/edit/{id}',[ProductController::class,'manage_product']);
+    Route::get('admin/product/status/{type}/{id}',[ProductController::class,'status']);
+    // deleting the product attribute
+    Route::get('admin/product/products_attr/delete/{id}/{cid}',[ProductController::class,'deleting']);
+    Route::get('admin/product/products_images/delete/{id}/{cid}',[ProductController::class,'deleting_images']);
+
+    //Branding starts from here
+    Route::get('admin/brand',[BrandController::class,'index']);
+    Route::get('admin/brand/manage_brand',[BrandController::class,'manage_brand']);
+    Route::post('admin/brand/manage_brand_processs',[BrandController::class,'manage_brand_processs'])->name('brand.manage_brand_process');
+    Route::get('admin/brand/delete/{id}',[BrandController::class,'delete']);
+    Route::get('admin/brand/manage_brand/edit/{id}',[BrandController::class,'manage_brand']);
 });

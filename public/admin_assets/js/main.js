@@ -1671,3 +1671,45 @@
   }
 
 })(jQuery);
+let loop_count=2;
+    function add_more(){
+      loop_count++;
+let html=' <input id="cc-slug" name="paid[]" type="hidden" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card"><div class="col-lg-12" id="product_attr_'+loop_count+'"><div class="card"><div class="form-group"><div class="row">';
+//adding the price
+html+='<div class="col-md-2"><label for="cc-slug" class="control-label mb-1"> price</label><input id="cc-slug" name="price[]" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card"/></div>'
+//adding the mrp
+html+='<div class="col-md-2"><label for="cc-slug" class="control-label mb-1"> MRP</label><input id="cc-slug" name="mrp[]" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card"></div>';
+//adding the sku
+html+='<div class="col-md-2"><label for="cc-slug" class="control-label mb-1"> SKU</label><input id="cc-slug" required name="sku[]" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card"></div>';
+//adding size
+let size_id_html=jQuery('#size_id').html();
+size_id_html=size_id_html.replace("selected","");
+ html+='<div class="col-md-3"><label for="cc-slug" class="control-label mb-1"> Size</label><select name="size_id[]" id="size_id" class="form-control cc-name valid">'+size_id_html+'</select></div>';
+//adding the color field
+let color_id_html=jQuery('#color_id').html();
+color_id_html=color_id_html.replace("selected","");
+ html+='<div class="col-md-3"><label for="cc-slug" class="control-label mb-1"> Color</label><select name="color_id[]" id="color_id" class="form-control cc-name valid">'+color_id_html+'</select></div>';
+//adding the qaunitty
+html+='<div class="col-md-2"><label for="cc-slug" class="control-label mb-1"> Quantity</label><input id="cc-slug" name="qty[]" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card"></div>';
+//adding the images
+html+='<div class="col-md-3"><label for="cc-slug" class="control-label mb-1"> Image</label><input id="cc-slug" name="attr_image[]" type="file" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card"></div>';
+//adding the remove button
+html+=' <div><button onclick=remove("'+loop_count+'") id="payment-button" type="button" class="btn btn-md btn-info btn-danger m-t-30"><i class="fa fa-minus "></i>Remove Attribute </button></div>'
+//closing the div tags
+ html+='</div></div></div></div>';
+jQuery('#at_box').append(html);
+    }
+    function remove(loop_count){  
+jQuery('#product_attr_'+loop_count).remove();
+    }
+
+let loop_image_count=1;
+    function add_image_more(){
+      loop_image_count++;
+     var html='<input id="cc-slug" value="" name="piid[]" type="hidden" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card"><div class="col-md-4 product_images_'+loop_image_count+'"><label for="cc-slug" class="control-label mb-1"> Image</label><input id="cc-slug" name="images[]" type="file" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card"></div>';
+      html+=' <div class="product_images_'+loop_image_count+'"><button onclick=remove_image_more("'+loop_image_count+'") id="payment-button" type="button" class="btn btn-md btn-info btn-danger m-t-30"><i class="fa fa-minus "></i>Remove Attribute </button></div>'
+jQuery('#images_box').append(html);
+    }
+    function remove_image_more(loop_count){  
+      jQuery('.product_images_'+loop_image_count).remove();
+          }

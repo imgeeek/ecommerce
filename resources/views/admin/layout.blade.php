@@ -92,6 +92,22 @@
                             <a class="js-arrow" href="{{url('admin/coupon')}}">
                                 <i class="fas fa-tag"></i>Coupon</a>
                         </li>
+                        <li class="@yield('size_select')">
+                            <a class="js-arrow" href="{{url('admin/size')}}">
+                                <i class="fas fa-pants"></i>Size</a>
+                        </li>
+                        <li class="@yield('color_select')">
+                            <a class="js-arrow" href="{{url('admin/color')}}">
+                                <i class="fas fa-paint-brush"></i>Colour</a>
+                        </li>
+                        <li class="@yield('product_select')">
+                            <a class="js-arrow" href="{{url('admin/product')}}">
+                                <i class="fas fa-product-hunt"></i>Product</a>
+                        </li>
+                        <li class="@yield('brand_select')">
+                            <a class="js-arrow" href="{{url('admin/brand')}}">
+                                <i class="fas fa-brand"></i>Brands</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -118,7 +134,7 @@
                                     <div class="account-item clearfix js-item-menu">
                                         
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">john doe</a>
+                                            <a class="js-acc-btn" href="#">Welcome Admin</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">

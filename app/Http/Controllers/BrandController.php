@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Size;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 
-class SizeController extends Controller
+class brandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class SizeController extends Controller
      */
     public function index()
     {
-        $data= Size::all();
-       return view('admin.size',['data'=>$data]);
+        $data= Brand::all();
+       return view('admin.brand',['data'=>$data]);
     }
 
     /**
@@ -23,18 +23,19 @@ class SizeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function manage_size(Request $request,$id='')
+    public function manage_brand(Request $request,$id='')
     {
         if($id>0){
-            $arr=Size::where(['id'=>$id])->get();
-            $data['size']=$arr['0']->size;
-
+            $arr=Brand::where(['id'=>$id])->get();
+            $data['name']=$arr['0']->name;
+$data['image']=1;
             $data['id']=$arr['0']->id;
         }else{
-            $data['size']="";
+            $data['name']="";
+            $data['image']="";
             $data['id']="";
         }
-        return view('admin.manage_size',$data);
+        return view('admin.manage_brand',$data);
     }
 
     /**
@@ -43,30 +44,31 @@ class SizeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function manage_size_processs(Request $request)
+    public function manage_brand_processs(Request $request)
     {
         $request->validate([
-            'size'=>'required|unique:sizes,size,'.$request->post('id')
+            'name'=>'required|unique:brands,name,'.$request->post('id')
         ]);
         
         if($request->post('id')>0){
-            $model=Size::find($request->post('id'));
-            $msg="size has been updated";
+            $model=Brand::find($request->post('id'));
+            $msg="Brand name has been updated";
         }else{
-            $model=new Size;
-            $msg="size has been added sucesssfully";
+            $model=new brand;
+            $msg="Brand name has been added sucesssfully";
         }
-        $model->size=$request->post('size');
+        $model->name=$request->post('name');
         $model->status=1;
+        $model->image=1;
         $model->save();
         $request->session()->flash('messsage',$msg);
-        return redirect('admin/size');
+        return redirect('admin/brand');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\size  $size
+     * @param  \App\Models\brand  $brand
      * @return \Illuminate\Http\Response
      */
     public function show(Request $request)
@@ -77,10 +79,10 @@ class SizeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\size  $size
+     * @param  \App\Models\brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function edit(size $size)
+    public function edit(brand $brand)
     {
         //
     }
@@ -89,10 +91,10 @@ class SizeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\size  $size
+     * @param  \App\Models\brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, size $size)
+    public function update(Request $request, brand $brand)
     {
         //
     }
@@ -100,22 +102,22 @@ class SizeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\size  $size
+     * @param  \App\Models\brand  $brand
      * @return \Illuminate\Http\Response
      */
     public function delete(Request $request,$id)
     {
-        $data=Size::find($id);
+        $data=Brand::find($id);
         $data->delete();
-        return redirect('admin/size');
+        return redirect('admin/brand');
     }
     public function status(Request $request,$type,$id)
     {
-$model=Size::find($id);
+$model=Brand::find($id);
 $model->status=$type;
 $model->save();
 $request->session()->flash('message','Item Activated');
-return redirect('admin/size');
+return redirect('admin/brand');
 
     }
 }
