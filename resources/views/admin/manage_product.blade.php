@@ -76,11 +76,20 @@
                                             >
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="cc-slug" class="control-label mb-1"> Brand</label>
-                                            <input id="cc-slug" required name="brand" type="text" class="form-control cc-name valid" data-val="true" data-val-required="Please enter the name on card"
-                                            value={{$brand}}
-                                            >
+                                            <label for="cc-slug" class="control-label mb-1"> Brands</label>
+                                            <select name="brand" id="" class="form-control cc-name valid">
+                                                <option value="">Select Categories</option>
+                                                @foreach ($brand as $item)
+                                                @if($brand==$item->name)
+                                                <option selected value="{{$item->id}}">{{$item->name}}</option>
+                                                @endif
+                                                <option value="{{$item->id}}">{{$item->name}}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
+                                        
+
+
                                     </div>
                                 </div>
                                 <div class="form-group has-success">
@@ -129,7 +138,7 @@
                                  $loop_count_num=1;
                                  
                                 @endphp
-                                @foreach ($productImagesArr as $key=>$val)
+                                @foreach ($productsImagesArr as $key=>$val)
                                @php
                                  $loop_count_prev=$loop_count_num;
                                    $pIArr=(array)$val;

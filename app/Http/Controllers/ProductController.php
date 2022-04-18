@@ -59,7 +59,6 @@ class ProductController extends Controller
             $data['name']="";
             $data['image']="";
             $data['slug']="";
-            $data['brand']="";
             $data['model']="";
             $data['short_desc']="";
             $data['descr']="";
@@ -85,6 +84,7 @@ class ProductController extends Controller
         $data['category']=DB::table('categories')->where(['status'=>1])->get(); //to get the category dropdown
 $data['color']=DB::table('colors')->where(['status'=>1])->get();
 $data['size']=DB::table('sizes')->where(['status'=>1])->get();
+$data['brand']=DB::table('brands')->where(['status'=>1])->get();
         return view('admin.manage_product',$data);
     }
 

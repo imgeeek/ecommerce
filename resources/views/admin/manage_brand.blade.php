@@ -14,7 +14,7 @@
                         <div class="card-body">
                          
                             <hr>
-                            <form action="{{route('brand.manage_brand_process')}}" method="post">
+                            <form action="{{route('brand.manage_brand_process')}}" method="post" enctype="multipart/form-data">
 @csrf
                                 <div class="form-group has-success">
                                     <label for="cc-name" class="control-label mb-1">Brand Name</label>

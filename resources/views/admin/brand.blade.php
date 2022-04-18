@@ -25,7 +25,7 @@
                                 <tr>
                                     <td>{{$item['id']}}</td>
                                     <td>{{$item['name']}}</td>
-                                   <td><img src="{{asset('storage/media/').$item['image']}}" alt=""></td>
+                                   <td><img width="150" src="{{asset('storage/media/model').'/'.$item['image']}}" alt="ewf"></td>
                                     <td>
                                         {{-- 1 is active and 2 is deactive --}}
                                         @if($item->status==1)

@@ -28,7 +28,7 @@ class brandController extends Controller
         if($id>0){
             $arr=Brand::where(['id'=>$id])->get();
             $data['name']=$arr['0']->name;
-$data['image']=1;
+$data['image']=$arr['0']->image;
             $data['id']=$arr['0']->id;
         }else{
             $data['name']="";
@@ -57,9 +57,15 @@ $data['image']=1;
             $model=new brand;
             $msg="Brand name has been added sucesssfully";
         }
+        if($request->hasfile('image')){
+            $image=$request->file('image'); 
+            $ext=$image->extension(); //this grabs the extension from the image
+            $image_name=rand(111,999).time().'.'.$ext;
+            $image->storeAs('/public/media/model',$image_name);
+            $model->image=$image_name;
+        }
         $model->name=$request->post('name');
         $model->status=1;
-        $model->image=1;
         $model->save();
         $request->session()->flash('messsage',$msg);
         return redirect('admin/brand');
