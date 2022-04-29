@@ -30,11 +30,17 @@ class CouponController extends Controller
             $data['title']=$arr['0']->title;
             $data['code']=$arr['0']->code;
             $data['value']=$arr['0']->value;
+            $data['type']=$arr['0']->type;
+            $data['min_order_amt']=$arr['0']->min_order_amt;
+            $data['is_one_time']=$arr['0']->is_one_time;
             $data['id']=$arr['0']->id;
         }else{
             $data['title']="";
             $data['code']="";
             $data['value']="";
+            $data['type']="";
+            $data['min_order_amt']="";
+            $data['is_one_time']="";
             $data['id']="";
         }
         return view('admin.manage_coupon',$data);
@@ -58,13 +64,16 @@ class CouponController extends Controller
             $model=Coupon::find($request->post('id'));
             $msg="Coupon updated";
         }else{
-          
             $model=new Coupon;
             $msg="Coupon has been sucessfulluy inserted";
+            $model->status=1;
         }
         $model->title=$request->post('title');
         $model->code=$request->post('code');
         $model->value=$request->post('value');
+        $model->type=$request->post('type');
+        $model->min_order_amt=$request->post('min_order_amt');
+        $model->is_one_time=$request->post('is_one_time');
         $model->save();
         $request->session()->flash('message',$msg);
         return redirect('admin/coupon');

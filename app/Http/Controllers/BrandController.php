@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use Storage;
 class brandController extends Controller
 {
     /**
@@ -28,7 +29,7 @@ class brandController extends Controller
         if($id>0){
             $arr=Brand::where(['id'=>$id])->get();
             $data['name']=$arr['0']->name;
-$data['image']=$arr['0']->image;
+            $data['image']=$arr['0']->image;
             $data['id']=$arr['0']->id;
         }else{
             $data['name']="";
@@ -58,6 +59,12 @@ $data['image']=$arr['0']->image;
             $msg="Brand name has been added sucesssfully";
         }
         if($request->hasfile('image')){
+            if($request->post('id')>0){
+                $arrImage=DB::table('brands')->where(['id'=>$request->post('id')])->get();
+              if(Storage::exists('/public/media'."/".$arrImage[0]->image)){
+                Storage::delete('/public/media'."/".$arrImage[0]->image);
+              }
+            }
             $image=$request->file('image'); 
             $ext=$image->extension(); //this grabs the extension from the image
             $image_name=rand(111,999).time().'.'.$ext;

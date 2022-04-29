@@ -6,7 +6,7 @@
     @else
     {{$required="required"}}
 @endif
-
+<script src="{{asset('ckeditor/ckeditor.js')}}"></script>
 <div class="main-content"> 
  <h1> Add product</h1>
  @error('attr_image.*')
@@ -124,6 +124,90 @@
                                 </div>
                                <input type="hidden" name="id" value={{$id}}>
 
+
+                               {{-- lead type starte here --}}
+                               <div class="form-group">
+                                   <div class="row">
+                                       <div class="col-md-4">
+                                        <label for="cc-slug" class="control-label mb-1"> Tax</label>
+                                        <input id="cc-slug" name="tax" type="text" class="form-control" data-val="true" 
+                                        value={{$tax}}>
+                                       </div>
+                                       <div class="col-md-4">
+                                        <label for="cc-slug" class="control-label mb-1"> Lead Time</label>
+                                        <input id="cc-slug" name="lead_time" type="text" class="form-control" data-val="true" 
+                                        value={{$lead_time}}>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="cc-slug" class="control-label mb-1"> Tax Type</label>
+                                        <input id="cc-slug" name="tax_type" type="text" class="form-control" data-val="true" 
+                                        value={{$tax_type}}>
+                                    </div>
+                                   </div>
+                               </div>
+                               <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                     <label for="cc-slug" class="control-label mb-1"> Promo</label>
+                                     <select name="is_promo" class="form-group" id="">
+                                         @if ($is_promo==1)
+                                         <option value="1" selected>Yes</option>
+                                         <option value="0">No</option>
+                                         @elseif($is_promo==0)
+                                         <option value="0" selected>No</option>
+                                         <option value="1">Yes</option>
+                                         @else
+                                         <option value="1">Yes</option>
+                                         <option value="0">No</option>
+                                         @endif
+                                     </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="cc-slug" class="control-label mb-1"> Featured</label>
+                                        <select name="is_featured" class="form-group" id="">
+                                            @if ($is_featured==1)
+                                            <option value="1" selected>Yes</option>
+                                            <option value="0">No</option>
+                                            @elseif($is_featured==0)
+                                            <option value="0" selected>No</option>
+                                            <option value="1">Yes</option>
+                                            @else
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                            @endif
+                                        </select>
+                                 </div>
+                                 <div class="col-md-3">
+                                     <label for="cc-slug" class="control-label mb-1"> Discount</label>
+                                     <select name="is_discounted" class="form-group" id="">
+                                        @if ($is_discounted==1)
+                                        <option value="1" selected>Yes</option>
+                                        <option value="0">No</option>
+                                        @elseif($is_discounted==0)
+                                        <option value="0" selected>No</option>
+                                        <option value="1">Yes</option>
+                                        @else
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                        @endif
+                                    </select>
+                                 </div>
+                                 <div class="col-md-3">
+                                    <label for="cc-slug" class="control-label mb-1"> Trending</label>
+                                    <select name="is_trending" class="form-group" id="">
+                                        @if ($is_trending==1)
+                                        <option value="1" selected>Yes</option>
+                                        <option value="0">No</option>
+                                        @elseif($is_trending==0)
+                                        <option value="0" selected>No</option>
+                                        <option value="1">Yes</option>
+                                        @else
+                                        <option>Default</option>
+                                        @endif
+                                    </select>
+                                </div>
+                                </div>
+                            </div>
                                {{-- * ! From here starts the attribute section --}}
                                @if(session()->has('sku_error'))
                                <div class="alert alert-danger text-align-center">

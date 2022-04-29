@@ -9,6 +9,9 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Storage;
+
+
 class ProductController extends Controller
 {
     /**
@@ -44,15 +47,27 @@ class ProductController extends Controller
             $data['technical_specification']=$arr['0']->technical_specification;
             $data['uses']=$arr['0']->uses;
             $data['warranty']=$arr['0']->warranty;
+
+            $data['lead_time']=$arr['0']->lead_time;
+            $data['tax']=$arr['0']->tax;
+            $data['tax_type']=$arr['0']->tax_type;
+            $data['is_promo']=$arr['0']->is_promo;
+            $data['is_featured']=$arr['0']->is_featured;
+            $data['is_discounted']=$arr['0']->is_discounted;
+            $data['is_trending']=$arr['0']->is_trending;
+
+
+
+
             $data['status']=$arr['0']->status;
             $data['id']=$arr['0']->id;
             $data['productsAttrArr']=DB::table('products_attr')->where(['products_id'=>$id])->get(); 
             $productsImagesArr=DB::table('products_images')->where(['products_id'=>$id])->get(); 
             if(!isset($productsImagesArr[0])){
-                $data['productImagesArr']['0']['id']="";
-                $data['productImagesArr']['0']['images']="";
+                $data['productsImagesArr']['0']['id']="";
+                $data['productsImagesArr']['0']['images']="";
             }else{
-              $data['productImagesArr']=$productsImagesArr;
+              $data['productsImagesArr']=$productsImagesArr;
             }
         }else{
             $data['category_id']="";
@@ -66,6 +81,16 @@ class ProductController extends Controller
             $data['technical_specification']="";
             $data['uses']="";
             $data['warranty']="";
+
+            $data['lead_time']='';
+            $data['tax']='';
+            $data['tax_type']='';
+            $data['is_promo']='';
+            $data['is_featured']='';
+            $data['is_discounted']='';
+            $data['is_trending']='';
+
+
             $data['status']="";
             $data['id']="";
             $data['productsAttrArr']['0']['id']="";
@@ -137,6 +162,12 @@ $image_validation="required|mimes:jpeg,jpg,png";
             $msg="product has been added sucesssfully";
         }
         if($request->hasfile('image')){
+   if($request->post('id')>0){
+    $arrImage=DB::table('products')->where(['id'=>$request->post('id')])->get();
+  if(Storage::exists('/public/media'."/".$arrImage[0]->image)){
+    Storage::delete('/public/media'."/".$arrImage[0]->image);
+  }
+   }
             $image=$request->file('image'); 
             $ext=$image->extension(); //this grabs the extension from the image
             $image_name=time().'.'.$ext;
@@ -154,6 +185,15 @@ $image_validation="required|mimes:jpeg,jpg,png";
         $model->technical_specification=$request->post('technical_specification');
         $model->uses=$request->post('uses');
         $model->warranty=$request->post('warranty');
+
+        $model->lead_time=$request->post('lead_time');
+        $model->tax=$request->post('tax');
+        $model->tax_type=$request->post('tax_type');
+        $model->is_promo=$request->post('is_promo');
+        $model->is_featured=$request->post('is_featured');
+        $model->is_discounted=$request->post('is_discounted');
+        $model->is_trending=$request->post('is_trending');
+
         $model->status=1;
         $model->save();
         $pid=$model->id;
@@ -161,6 +201,7 @@ $image_validation="required|mimes:jpeg,jpg,png";
         // product Attrribute starting from hreer
         
         foreach($skuArr as $key=>$val){
+            $productsAttrArr=[];
             $productsAttrArr['products_id']=$pid;
             $productsAttrArr['sku']=$skuArr[$key];
             if($request->hasFile("attr_image.$key")){
@@ -264,11 +305,16 @@ $image_validation="required|mimes:jpeg,jpg,png";
     }
     public function deleting(Request $request,$id,$cid)
     {
+        $arrImage=DB::table('products_arr')->where(['id'=>$id])->get();
+        Storage::delete('/public/media'."/".$arrImage[0]->attr_image);
+
         DB::table('products_attr')->where(['id'=>$id])->delete();
         return redirect('admin/product/manage_product/edit/'.$cid);
     }
     public function deleting_images(Request $request,$id,$cid)
     {
+        $arrImage=DB::table('products_images')->where(['id'=>$id])->get();
+        Storage::delete('/public/media'."/".$arrImage[0]->images);
         DB::table('products_images')->where(['id'=>$id])->delete();
         return redirect('admin/product/manage_product/edit/'.$cid);
     }

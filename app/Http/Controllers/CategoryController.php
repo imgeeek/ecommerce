@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\DB;
+use Storage;
 class CategoryController extends Controller
 {
     /**
@@ -29,12 +30,20 @@ class CategoryController extends Controller
             $arr=Category::where(['id'=>$id])->get();
             $data['category_name']=$arr['0']->category_name;
             $data['category_slug']=$arr['0']->category_slug;
+            $data['parent_category_id']=$arr['0']->parent_category_id;
+            $data['category_image']=$arr['0']->category_image;
             $data['id']=$arr['0']->id;
+            $data['category']=DB::table('categories')->where(['status'=>1])->where('id','!=',$id)->get(); //to get the category dropdown
         }else{
             $data['category_name']="";
             $data['category_slug']="";
+            $data['parent_category_id']="";
+            $data['category_image']="";
             $data['id']="";
+            $data['category']=DB::table('categories')->where(['status'=>1])->get(); //to get the category dropdown
+            
         }
+        
         return view('admin.manage_category',$data);
     }
 
@@ -51,6 +60,7 @@ class CategoryController extends Controller
             'category_name'=>'required',
             'category_slug'=>'required|unique:categories,category_slug,'.$request->post('id')
         ]);
+       
         
         if($request->post('id')>0){
             $model=Category::find($request->post('id'));
@@ -61,11 +71,27 @@ class CategoryController extends Controller
         }
         $model->category_name=$request->post('category_name');
         $model->category_slug=$request->post('category_slug');
+        $model->parent_category_id=$request->post('parent_category_id');
+         //for_image
+         if($request->hasfile('category_image')){
+            if($request->post('id')>0){
+                $arrImage=DB::table('categories')->where(['id'=>$request->post('id')])->get();
+              if(Storage::exists('/public/media/category'."/".$arrImage[0]->category_image)){
+                Storage::delete('/public/media/category'."/".$arrImage[0]->category_image);
+              }
+            }
+            $image=$request->file('category_image'); 
+            $ext=$image->extension(); //this grabs the extension from the image
+            $image_name=rand(1111,9999).time().'.'.$ext;
+            $image->storeAs('/public/media/category',$image_name);
+            $model->category_image=$image_name;
+        }
         $model->status=1;
         $model->save();
         $request->session()->flash('messsage',$msg);
         return redirect('admin/category');
     }
+
 
     /**
      * Display the specified resource.

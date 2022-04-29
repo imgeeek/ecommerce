@@ -8,6 +8,9 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\TaxController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\FrontController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,9 +22,27 @@ use App\Http\Controllers\BrandController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('front.welcome');
+// });
+Route::get('/',[FrontController::class,'index']);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Route::get('admin',[AdminController::class,'index']);
 Route::post('admin.auth',[AdminController::class,'auth'])->name('admin.auth');
 // This is how middleware does the security
@@ -78,4 +99,19 @@ Route::group(['middleware'=>'admin_auth'], function(){
     Route::post('admin/brand/manage_brand_processs',[BrandController::class,'manage_brand_processs'])->name('brand.manage_brand_process');
     Route::get('admin/brand/delete/{id}',[BrandController::class,'delete']);
     Route::get('admin/brand/manage_brand/edit/{id}',[BrandController::class,'manage_brand']);
+
+    //Tax routing starts from here
+    Route::get('admin/tax',[TaxController::class,'index']);
+    Route::get('admin/tax/manage_tax',[TaxController::class,'manage_tax']);
+    Route::post('admin/tax/manage_tax_processs',[TaxController::class,'manage_tax_processs'])->name('tax.manage_tax_process');
+    Route::get('admin/tax/delete/{id}',[TaxController::class,'delete']);
+    Route::get('admin/tax/manage_tax/edit/{id}',[TaxController::class,'manage_tax']);
+    Route::get('admin/tax/status/{type}/{id}',[TaxController::class,'status']);
+
+    //customering
+    Route::get('admin/customer',[CustomerController::class,'index']);
+    Route::get('admin/customer/status/{type}/{id}',[CustomerController::class,'status']);
+
+
+    //FrontController
 });

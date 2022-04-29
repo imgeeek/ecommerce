@@ -16,6 +16,7 @@
                                     <th>ID</th>
                                     <th>Name</th>
                                     <th>Slug</th>
+                                    <th>Images</th>
                                     <th>ACTIONS</th>
                                   
                                 </tr>
@@ -26,6 +27,7 @@
                                     <td>{{$item['id']}}</td>
                                     <td>{{$item['category_name']}}</td>
                                     <td>{{$item['category_slug']}}</td>
+                                    <td><img width="100" src="{{asset('storage/media/category')."/".$item['category_image']}}" alt="{{$item['category_name']}}"></td>
                                     <td>
                                         {{-- 1 is active and 2 is deactive --}}
                                         @if($item->status==1)

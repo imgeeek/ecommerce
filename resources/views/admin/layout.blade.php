@@ -108,6 +108,14 @@
                             <a class="js-arrow" href="{{url('admin/brand')}}">
                                 <i class="fas fa-brand"></i>Brands</a>
                         </li>
+                        <li class="@yield('tax_select')">
+                            <a class="js-arrow" href="{{url('admin/tax')}}">
+                                <i class="fas fa-brand"></i>Tax</a>
+                        </li>
+                        <li class="@yield('user_select')">
+                            <a class="js-arrow" href="{{url('admin/customer')}}">
+                                <i class="fas fa-user"></i>Customer</a>
+                        </li>
                     </ul>
                 </nav>
             </div>

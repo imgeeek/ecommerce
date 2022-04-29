@@ -1713,3 +1713,5 @@ jQuery('#images_box').append(html);
     function remove_image_more(loop_count){  
       jQuery('.product_images_'+loop_image_count).remove();
           }
+        CKEDITOR.replace('short_desc');
+         
